@@ -9,6 +9,6 @@ require "carbidsetup"
 # (If you use this, don't forget to add pry to your Gemfile!)
 require "pry"
 Pry.start
-
+# Carbidsetup::Main.new.run
 # require "irb"
 # IRB.start(__FILE__)

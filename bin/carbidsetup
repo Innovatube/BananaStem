@@ -1,3 +1,5 @@
-#!/usr/bin/env ruby -U 
-require 'carbidsetup'
-CarbidSetup::Main.new
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "carbidsetup"
+Carbidsetup::Main.new.run

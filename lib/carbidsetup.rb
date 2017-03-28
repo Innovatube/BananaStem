@@ -1,12 +1,11 @@
 require "carbidsetup/version"
 require 'highline'
-require 'cocoapods'
 module Carbidsetup
   class Main < HighLine
     def run 
       project_path = Dir.glob('./*.xcodeproj').first
-      if project_file
-        say("Setting up files for project #{project_name}")
+      if project_path
+        say("Setting up files for project #{project_path}")
       else
         say("Couldn't find *.xcproject file. Please cd into the correct folder of the project file")
         abort
