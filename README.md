@@ -6,8 +6,8 @@ Welcome to your new gem! In this directory, you'll find the files you need to be
 ## Installation in development mode
 
  - cd into the project folder
- - `gem build *.gemspec`
- - `gem install *.gem`
+ - `$ gem build *.gemspec`
+ - `$ gem install *.gem`
 
 ## Installation
 
@@ -26,8 +26,9 @@ Or install it yourself as:
     $ gem install carbidsetup
 
 ## Usage
-
-`carbidsetup` and following the instruction. The command should be run within an xcode project folder. 
+- cd into an xcode project's folder
+- `$ carbidsetup`
+- follow the instruction 
 
 ## Development
 
