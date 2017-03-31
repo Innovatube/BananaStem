@@ -17,7 +17,7 @@ module Carbidsetup
         
         def add_url_scheme(url)
             plist_path = "#{project_name}/info.plist"
-            unless Dir.grep(plist_path)
+            unless Dir.grep(plist_path).first 
                 `echo #{info_plist_content} > #{plist_path}`
             end
             file = FileEdit(plist_path)
@@ -38,7 +38,7 @@ module Carbidsetup
             # end
             
             # add_line_under_line(@info_plist_path, /\A<key>CFBundleURLTypes<\/key>\z/,
-            )
+            
         end
         
         def project_destination 

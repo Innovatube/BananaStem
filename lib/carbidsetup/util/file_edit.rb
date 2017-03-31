@@ -60,10 +60,10 @@ module Carbidsetup
             @changes = (editor.append_line_if_missing(regex, newline) > 0) || @changes
         end
 
-        def insert_line_after_line_if_no_match(newline,regex, regex2)
-            if 
-            @changes = 
-        end 
+        # def insert_line_after_line_if_no_match(newline,regex, regex2)
+        #     if 
+        #     @changes = 
+        # end 
         
         def unwritten_changes?
             !!@changes

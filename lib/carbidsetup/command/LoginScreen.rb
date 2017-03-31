@@ -14,12 +14,15 @@ module Carbidsetup
         def run 
             case @options["authentication"]
                 when "facebook"
-                    add_facebook_pods LOGIN_FACEBOOK_TEMPLATE project_destination
+                    FileUtils.move LOGIN_FACEBOOK_TEMPLATE project_destination
+                    add_facebook_pods
                 when "google" 
                     FileUtils.move LOGIN_GOOGLE_TEMPLATE project_destination
                     add_google_pod
                 when "facebook_google"
                     FileUtils.move LOGIN_FB_GG_TEMPLATE project_destination
+                    add_facebook_pods
+                    add_google_pod
                 else 
                     FileUtils.move LOGIN_WITHOUT_TEMPLATE project_destination
             end
