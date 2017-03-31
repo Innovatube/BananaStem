@@ -1,5 +1,6 @@
+require "carbidsetup/command"
 module Carbidsetup
-    class Googlesetup
+    class Googlesetup < Command 
         def setup_google
             url = 'https://developers.google.com/mobile/add?platform=ios&cntapi=signin&cntapp=Default%20Demo%20App&cntpkg=com.google.samples.quickstart.SignInExample'
             `open #{url}`

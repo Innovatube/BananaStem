@@ -29,6 +29,11 @@ module Carbidsetup
         
         count
     end
+
+    def line_existed?(search)
+        @lines.find { |line| line.match(search) }
+    end 
+    
     
     def remove_lines(search)
         count = 0

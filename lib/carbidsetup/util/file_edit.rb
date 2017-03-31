@@ -1,6 +1,6 @@
 # Copy from chef's source code
 
-require "cardbisetup/util/editor"
+require "carbidsetup/util/editor"
 require "fileutils"
 
 module Carbidsetup
@@ -59,6 +59,11 @@ module Carbidsetup
         def insert_line_if_no_match(regex, newline)
             @changes = (editor.append_line_if_missing(regex, newline) > 0) || @changes
         end
+
+        def insert_line_after_line_if_no_match(newline,regex, regex2)
+            if 
+            @changes = 
+        end 
         
         def unwritten_changes?
             !!@changes

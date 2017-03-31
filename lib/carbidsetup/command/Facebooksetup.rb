@@ -1,5 +1,6 @@
+require "carbidsetup/command"
 module Carbidsetup
-    class Facebooksetup
+    class Facebooksetup < Command 
         def setup_facebook
             url = 'https://developers.facebook.com/docs/facebook-login/ios'
             `open #{url}`
