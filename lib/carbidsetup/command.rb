@@ -1,26 +1,27 @@
 require 'carbidsetup/util/file_edit'
 module Carbidsetup
     class Command
-        def initialize(project_name, *options)
+        def initialize(project_name, options)
             @project_name = project_name
             @options = options
         end 
 
         def add_pod(pod)
-            unless Dir.grep("podfile").first 
-                `echo #{podfile_content} > podfile`
+            unless Dir.glob("podfile").first 
+                `touch #{project_destination}/podfile`
+                `echo #{podfile_content} > #{project_destination}/podfile`
             end 
-            file = FileEdit("podfile")
+            file = FileEdit.new("podfile")
             file.insert_line_after_match(/use_frameworks!/, pod)
             file.write_file
         end
         
         def add_url_scheme(url)
             plist_path = "#{project_name}/info.plist"
-            unless Dir.grep(plist_path).first 
+            unless Dir.glob(plist_path).first 
                 `echo #{info_plist_content} > #{plist_path}`
             end
-            file = FileEdit(plist_path)
+            file = FileEdit.new(plist_path)
             file.insert_line_after_match(url_scheme_xml_matcher,
             "<dict>
             <key>CFBundleTypeRole</key>
@@ -42,7 +43,7 @@ module Carbidsetup
         end
         
         def project_destination 
-            "./Project_folder/"
+            "./#{@project_name}/"
         end
         
         def podfile_content 
@@ -50,7 +51,7 @@ module Carbidsetup
                 dynamic framework 
                 use_frameworks!
             end"
-        end 
+        end
 
         def info_plist_content 
             "<dict>/n<key>CFBundleURLTypes</key>/n</dict>"

@@ -8,19 +8,19 @@ module Carbidsetup
   class Main < HighLine
     attr_accessor :project_name
     def run 
-      unless file_exist? '*.yaml'
-        puts "Swagger file is missing. Please provide."
-        abort 
-      end 
-      @project_name = ask("Choose a project name") { |q| q.default = "TestProject" }
-      filename = Dir.glob("*.yaml").first 
-      `swagger-codegen generate -i #{filename} -l swift3 -o ./#{project_name}/swagger` 
-      cache_option
+    #   unless file_exist? '*.yaml'
+    #     puts "Swagger file is missing. Please provide."
+    #     abort 
+    #   end 
+    #   @project_name = ask("Choose a project name") { |q| q.default = "TestProject" }
+    # FileUtils.mkdir("./#{@project_name}")
+    #   filename = Dir.glob("*.yaml").first 
+    #   `swagger-codegen generate -i #{filename} -l swift3 -o ./#{project_name}/swagger` 
+    #   cache_option
+    @project_name = "ABC"
       login_view_options
       list_view_options
-      
-      add_line_under_line("podfile",/use_frameworks!/, pods_to_string)
-      # `pod install` Trying to run pod install 
+    # `pod install` Trying to run pod install 
     end
     
     def login_view_options
@@ -35,10 +35,10 @@ module Carbidsetup
         menu.choice(:facebook_google) { options["authentication"] = "facebook_google" }
         menu.choice(:facebook) { options["authentication"] = "facebook" }
         menu.choice(:google) { options["authentication"] = "google" }
-        menu.choice(:no)
+        menu.choice(:no) { options["authentication"] = "" }
         menu.default = :no
       end 
-      Loginscreen(options).run
+      Carbidsetup::Loginscreen.new(@project_name, options).run
     end 
     
     def cache_option 

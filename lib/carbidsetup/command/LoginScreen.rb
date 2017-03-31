@@ -3,28 +3,25 @@ require "carbidsetup/constants"
 require "fileutils"
 module Carbidsetup
     class Loginscreen < Command        
-        LOGIN_FB_GG_TEMPLATE = "carbidsetup/template_files/login_with_fb_gg/"
-        LOGIN_WITHOUT_TEMPLATE = 
-        "carbidsetup/template_files/login_without"
-        LOGIN_FACEBOOK_TEMPLATE = 
-        "carbidsetup/template_files/login_with_google"
-        LOGIN_GOOGLE_TEMPLATE = 
-        "carbidsetup/template_files/login_with_facebook"
+        FB_GG_TEMPLATE = "lib/carbidsetup/template_files/login_view/login_with_fb_gg/Login"
+        WITHOUT_TEMPLATE = "lib/carbidsetup/template_files/login_view/login_without/Login"
+        FACEBOOK_TEMPLATE = "lib/carbidsetup/template_files/login_view/login_with_google/Login"
+        GOOGLE_TEMPLATE = "lib/carbidsetup/template_files/login_view/login_with_facebook/Login"
         
-        def run 
+        def run
             case @options["authentication"]
                 when "facebook"
-                    FileUtils.move LOGIN_FACEBOOK_TEMPLATE project_destination
+                    FileUtils.copy_entry(FACEBOOK_TEMPLATE ,project_destination)
                     add_facebook_pods
                 when "google" 
-                    FileUtils.move LOGIN_GOOGLE_TEMPLATE project_destination
+                    FileUtils.copy_entry(GOOGLE_TEMPLATE,project_destination)
                     add_google_pod
                 when "facebook_google"
-                    FileUtils.move LOGIN_FB_GG_TEMPLATE project_destination
+                    FileUtils.copy_entry(FB_GG_TEMPLATE,project_destination)
                     add_facebook_pods
                     add_google_pod
                 else 
-                    FileUtils.move LOGIN_WITHOUT_TEMPLATE project_destination
+                    FileUtils.copy_entry(WITHOUT_TEMPLATE,project_destination)
             end
         end
 

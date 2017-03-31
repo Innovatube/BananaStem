@@ -59,11 +59,14 @@ module Carbidsetup
         def insert_line_if_no_match(regex, newline)
             @changes = (editor.append_line_if_missing(regex, newline) > 0) || @changes
         end
-
-        # def insert_line_after_line_if_no_match(newline,regex, regex2)
-        #     if 
-        #     @changes = 
-        # end 
+        
+        def insert_line_after_line_if_no_match(newline,regex, regex2)
+            unless editor.line_existed? regex 
+                @changes = insert_line_after_match(regex2, newline)
+            else  
+                @changes
+            end
+        end
         
         def unwritten_changes?
             !!@changes
