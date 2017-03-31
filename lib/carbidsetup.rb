@@ -8,19 +8,16 @@ module Carbidsetup
   class Main < HighLine
     attr_accessor :project_name
     def run 
-    #   unless file_exist? '*.yaml'
-    #     puts "Swagger file is missing. Please provide."
-    #     abort 
-    #   end 
-    #   @project_name = ask("Choose a project name") { |q| q.default = "TestProject" }
-    # FileUtils.mkdir("./#{@project_name}")
-    #   filename = Dir.glob("*.yaml").first 
-    #   `swagger-codegen generate -i #{filename} -l swift3 -o ./#{project_name}/swagger` 
-    #   cache_option
-    @project_name = "ABC"
+      unless file_exist? '*.yaml'
+        puts "Swagger file is missing. Please provide."
+        abort 
+      end 
+      @project_name = ask("Choose a project name") { |q| q.default = "TestProject" }
+      FileUtils.mkdir("./#{@project_name}")
+      filename = Dir.glob("*.yaml").first 
+      `swagger-codegen generate -i #{filename} -l swift3 -o ./#{project_name}/swagger` 
       login_view_options
       list_view_options
-    # `pod install` Trying to run pod install 
     end
     
     def login_view_options
@@ -64,8 +61,8 @@ module Carbidsetup
         menu.choice(:yes) { options["drawer"] = true }
         menu.choice(:no)
         menu.default = :no
-      end 
-      # Add list view
+      end
+      Listscreen.new(@project_name, options)
     end 
     
     def file_exist?(file_ext)
