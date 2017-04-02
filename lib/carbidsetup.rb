@@ -4,6 +4,8 @@ require "carbidsetup/command/loginscreen"
 require "carbidsetup/command/listscreen"
 require "carbidsetup/command/facebooksetup"
 require "carbidsetup/command/googlesetup"
+require "carbidsetup/command/iosproject"
+
 module Carbidsetup
   class Main < HighLine
     attr_accessor :project_name
@@ -17,9 +19,9 @@ module Carbidsetup
     #   filename = Dir.glob("*.yaml").first 
     #   `swagger-codegen generate -i #{filename} -l swift3 -o ./#{project_name}/swagger` 
     #   cache_option
-    @project_name = "ABC"
-      login_view_options
-      list_view_options
+    setup_xcode_project
+    login_view_options
+    list_view_options
     # `pod install` Trying to run pod install 
     end
     
@@ -71,7 +73,13 @@ module Carbidsetup
     def file_exist?(file_ext)
       Dir.glob(file_ext).first
     end
-    
-    
+
+    def setup_xcode_project
+      options = Hash.new
+      @project_name = ask("Choose a project name") { |q| q.default = "TestProject" }
+      Carbidsetup::IOSProject.new(@project_name, options).setup
+    end
+
+    private :setup_xcode_project
   end 
 end
