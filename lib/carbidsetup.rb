@@ -4,6 +4,8 @@ require "carbidsetup/command/loginscreen"
 require "carbidsetup/command/listscreen"
 require "carbidsetup/command/facebooksetup"
 require "carbidsetup/command/googlesetup"
+require "carbidsetup/command/iosproject"
+
 module Carbidsetup
   class Main < HighLine
     attr_accessor :project_name
@@ -12,8 +14,9 @@ module Carbidsetup
         puts "Swagger file is missing. Please provide."
         abort 
       end 
-      @project_name = ask("Choose a project name") { |q| q.default = "TestProject" }
-      FileUtils.mkdir("./#{@project_name}")
+      # @project_name = ask("Choose a project name") { |q| q.default = "TestProject" }
+      # FileUtils.mkdir("./#{@project_name}")
+      setup_xcode_project
       filename = Dir.glob("*.yaml").first 
       `swagger-codegen generate -i #{filename} -l swift3 -o ./#{project_name}/swagger` 
       login_view_options
@@ -68,7 +71,13 @@ module Carbidsetup
     def file_exist?(file_ext)
       Dir.glob(file_ext).first
     end
-    
-    
+
+    def setup_xcode_project
+      options = Hash.new
+      @project_name = ask("Choose a project name") { |q| q.default = "TestProject" }
+      Carbidsetup::IOSProject.new(@project_name, options).setup
+    end
+
+    private :setup_xcode_project
   end 
 end
