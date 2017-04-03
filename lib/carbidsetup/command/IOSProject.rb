@@ -14,7 +14,8 @@ module Carbidsetup
         PBXPROJ_FILE = "/project.pbxproj"
 
         def setup
-            FileUtils.copy_entry(IOS_RAW_PROJECT, project_destination)
+            `git clone https://github.com/jimmypham92/templates-ios.git #{project_destination}`
+            `rm -rf #{@project_name}/.git`
             make_usage_project
         end
 
