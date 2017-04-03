@@ -16,7 +16,6 @@ module Carbidsetup
       # end 
       # @project_name = ask("Choose a project name") { |q| q.default = "TestProject" }
       # FileUtils.mkdir("./#{@project_name}")
-      puts Dir.pwd
       setup_xcode_project
       filename = Dir.glob("*.yaml").first 
       `swagger-codegen generate -i #{filename} -l swift3 -o ./#{project_name}/swagger` 

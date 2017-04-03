@@ -1,6 +1,7 @@
 require "fileutils"
 require "nokogiri"
 require "carbidsetup/command"
+require "carbidsetup/git"
 
 module Carbidsetup
     class IOSProject < Command
@@ -14,8 +15,7 @@ module Carbidsetup
         PBXPROJ_FILE = "/project.pbxproj"
 
         def setup
-            `git clone https://github.com/jimmypham92/templates-ios.git #{project_destination}`
-            `rm -rf #{@project_name}/.git`
+            Git.archive_raw_ios_project(project_destination)
             make_usage_project
         end
 
