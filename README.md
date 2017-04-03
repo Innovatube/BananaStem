@@ -26,6 +26,8 @@ Or install it yourself as:
     $ gem install carbidsetup
 
 ## Usage
+
+- Make sure you had the swagger-codegen tool install. To install it, run `$ brew install swagger-codegen` 
 - cd into an xcode project's folder
 - `$ carbidsetup`
 - follow the instruction 
