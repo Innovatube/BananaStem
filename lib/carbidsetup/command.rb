@@ -7,11 +7,12 @@ module Carbidsetup
         end 
 
         def add_pod(pod)
-            unless Dir.glob("podfile").first 
-                `touch #{project_destination}/podfile`
-                `echo #{podfile_content} > #{project_destination}/podfile`
+            unless File.exist?("#{project_destination}podfile")
+                File.open("#{project_destination}/podfile", "w+") do |file |
+                    file.puts podfile_content
+                end 
             end 
-            file = FileEdit.new("podfile")
+            file = FileEdit.new("#{project_destination}podfile")
             file.insert_line_after_match(/use_frameworks!/, pod)
             file.write_file
         end
