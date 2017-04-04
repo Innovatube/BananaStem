@@ -13,7 +13,7 @@ module Carbidsetup
                 end 
             end 
             file = FileEdit.new("#{project_destination}podfile")
-            file.insert_line_after_match(/use_frameworks!/, pod)
+            file.insert_line_after_match(/use_frameworks!/, "pod  " + pod )
             file.write_file
         end
         

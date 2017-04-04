@@ -65,7 +65,7 @@ module Carbidsetup
         menu.choice(:no)
         menu.default = :no
       end
-      Listscreen.new(@project_name, options)
+      Listscreen.new(@project_name, options).run
     end 
     
     def file_exist?(file_ext)

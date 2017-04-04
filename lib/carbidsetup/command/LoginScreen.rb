@@ -45,7 +45,7 @@ module Carbidsetup
         end 
         
         def add_google_pod
-            add_pod(Constants::Pods::GOOGLE)
-        end   
+            Constants::Pods::GOOGLE.each {|pod| add_pod(pod) } 
+        end
     end 
 end 
