@@ -2,11 +2,13 @@ require "carbidsetup/command"
 
 module Carbidsetup
     class Git < Command
-        RAW_IOSPROJECT_REPO = "https://github.com/jimmypham92/templates-ios.git"
+        IOS_TEMPLATE_REPO = "https://github.com/Innovatube/iOS-Templates.git"
+        RAW_PROJECT_BRANCH = "raw_ios_project"
 
         def self.archive_raw_ios_project(project_destination)
-            `git clone #{RAW_IOSPROJECT_REPO} #{project_destination} && rm -rf #{@project_name}/.git`
+            `git clone #{IOS_TEMPLATE_REPO} --branch #{RAW_PROJECT_BRANCH} --single-branch #{project_destination}`
         end
 
+        private_constant :IOS_TEMPLATE_REPO, :RAW_PROJECT_BRANCH
     end
 end
