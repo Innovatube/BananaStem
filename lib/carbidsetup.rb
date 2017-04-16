@@ -10,12 +10,10 @@ module Carbidsetup
   class Main < HighLine
     attr_accessor :project_name
     def run 
-      # unless file_exist? '*.yaml'
-      #   puts "Swagger file is missing. Please provide."
-      #   abort 
-      # end 
-      # @project_name = ask("Choose a project name") { |q| q.default = "TestProject" }
-      # FileUtils.mkdir("./#{@project_name}")
+      unless File.exist? '*.yaml'
+        puts "Swagger file is missing. Please provide."
+        abort 
+      end 
       setup_xcode_project
       filename = Dir.glob("*.yaml").first 
       `swagger-codegen generate -i #{filename} -l swift3 -o ./#{project_name}/swagger` 
@@ -67,17 +65,12 @@ module Carbidsetup
       end
       Listscreen.new(@project_name, options).run
     end 
-    
-    def file_exist?(file_ext)
-      Dir.glob(file_ext).first
-    end
 
     def setup_xcode_project
       options = Hash.new
       @project_name = ask("Choose a project name") { |q| q.default = "TestProject" }
-      Carbidsetup::IOSProject.new(@project_name, options).setup
+      Carbidsetup::IOSProject.new(@project_name, options).run
     end
 
-    private :setup_xcode_project
   end 
 end

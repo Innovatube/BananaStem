@@ -14,7 +14,7 @@ module Carbidsetup
         FILE_REF = "FileRef"
         PBXPROJ_FILE = "/project.pbxproj"
 
-        def setup
+        def run
             Git.archive_raw_ios_project(project_destination)
             make_usage_project
         end
@@ -37,9 +37,6 @@ module Carbidsetup
             text = File.read(pbxproj_file)
             content = text.gsub(RAW_PROJECT_NAME, @project_name)
             File.open(pbxproj_file, "w") { |file| file << content }
-        end
-
-        private :make_usage_project
-        
+        end        
     end
 end
