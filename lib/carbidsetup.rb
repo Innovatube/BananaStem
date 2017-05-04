@@ -10,16 +10,31 @@ module Carbidsetup
   class Main < HighLine
     attr_accessor :project_name
     def run 
-      unless File.exist? '*.yaml'
-        puts "Swagger file is missing. Please provide."
-        abort 
-      end 
+      swagger
       setup_xcode_project
-      filename = Dir.glob("*.yaml").first 
-      `swagger-codegen generate -i #{filename} -l swift3 -o ./#{project_name}/swagger` 
       login_view_options
       list_view_options
     end
+
+    def brew_package_exist?(name)
+      system "brew ls --versions #{name}"
+    end 
+
+    def check_swagger_codegen 
+      unless brew_package_exist? "swagger-codegen-moya"
+        `brew install https://raw.githubusercontent.com/dangthaison91/swagger-codegen-moya/swift3_moya/swagger-codegen-moya.rb`
+      end
+    end 
+
+    def swagger
+      unless File.exist? '*.yaml'
+        puts "Swagger file is missing. Please provide."
+        return 
+      end 
+      filename = Dir.glob("*.yaml").first 
+      check_swagger_codegen
+      `swagger-codegen generate -t swagger/moya-template -i #{filename} -l swift3-moya -c ./bin/swagger-config.json -o ./#{project_name}/API`
+    end 
     
     def login_view_options
       options = Hash.new
@@ -36,16 +51,7 @@ module Carbidsetup
         menu.choice(:no) { options["authentication"] = "" }
         menu.default = :no
       end 
-      Carbidsetup::Loginscreen.new(@project_name, options).run
-    end 
-    
-    def cache_option 
-      choose do |menu| 
-        menu.prompt = "   Add cache options ? "
-        menu.choice(:yes) 
-        menu.choice(:no)
-        menu.default = :yes
-      end
+      # Loginscreen.new(@project_name, options).run
     end 
     
     def list_view_options
@@ -63,14 +69,23 @@ module Carbidsetup
         menu.choice(:no)
         menu.default = :no
       end
-      Listscreen.new(@project_name, options).run
+      # Listscreen.new(@project_name, options).run
     end 
 
+    def ask_check_project
+      count = 0 
+      begin 
+        puts "Directory with the same name existed." if count > 0  
+        @project_name = ask("Choose a project name") { |q| q.default = "TestProject" }
+        count += 1 
+      end until !File.directory? @project_name
+    end 
+    
     def setup_xcode_project
       options = Hash.new
-      @project_name = ask("Choose a project name") { |q| q.default = "TestProject" }
-      Carbidsetup::IOSProject.new(@project_name, options).run
+      ask_check_project
+      IOSProject.new(@project_name, options).run
     end
-
+    
   end 
 end
