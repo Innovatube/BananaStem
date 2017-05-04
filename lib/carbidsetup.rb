@@ -29,6 +29,7 @@ module Carbidsetup
     def swagger
       unless File.exist? '*.yaml'
         puts "Swagger file is missing. Please provide."
+        puts "Won't check nor run swagger-codegen as a result."
         return 
       end 
       filename = Dir.glob("*.yaml").first 
