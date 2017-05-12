@@ -5,15 +5,19 @@ require "carbidsetup/command/listscreen"
 require "carbidsetup/command/facebooksetup"
 require "carbidsetup/command/googlesetup"
 require "carbidsetup/command/iosproject"
+require "carbidsetup/user_interface"
 
 module Carbidsetup
+  class CarbidsetupError < StandardError; end 
   class Main < HighLine
     attr_accessor :project_name
+
     def run 
       swagger
       setup_xcode_project
       login_view_options
       list_view_options
+      UserInterface.prints_warnings
     end
 
     def brew_package_exist?(name)
@@ -22,14 +26,16 @@ module Carbidsetup
 
     def check_swagger_codegen 
       unless brew_package_exist? "swagger-codegen-moya"
+        UserInterface.notice "Missing brew package swagger-codegen-moya"
+        UserInterface.notice "Install brew package swagger-codegen-moya"
         `brew install https://raw.githubusercontent.com/dangthaison91/swagger-codegen-moya/swift3_moya/swagger-codegen-moya.rb`
       end
     end 
 
     def swagger
       unless File.exist? '*.yaml'
-        puts "Swagger file is missing. Please provide."
-        puts "Won't check nor run swagger-codegen as a result."
+        UserInterface.warn "Swagger file is missing. Please provide."
+        UserInterface.warn "Won't check nor run swagger-codegen as a result."
         return 
       end 
       filename = Dir.glob("*.yaml").first 
@@ -85,7 +91,7 @@ module Carbidsetup
     def setup_xcode_project
       options = Hash.new
       ask_check_project
-      IOSProject.new(@project_name, options).run
+      # IOSProject.new(@project_name, options).run
     end
     
   end 

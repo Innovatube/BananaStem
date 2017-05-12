@@ -1,14 +1,26 @@
 require "carbidsetup/command"
 
 module Carbidsetup
-    class Git < Command
-        IOS_TEMPLATE_REPO = "https://github.com/Innovatube/iOS-Templates.git"
-        RAW_PROJECT_BRANCH = "raw_ios_project"
+    class Git
+        def self.git_url_isValid?(url)
+            !(/https:\/\/github.com\/\w+\/\w+.git/ =~ url).nil?
+        end 
 
-        def self.archive_raw_ios_project(project_destination)
-            `git clone #{IOS_TEMPLATE_REPO} --branch #{RAW_PROJECT_BRANCH} --single-branch #{project_destination}`
+        def self.download_git_master(url)
+            git_shallow_clone(url, "master")
+            remove_git
         end
 
-        private_constant :IOS_TEMPLATE_REPO, :RAW_PROJECT_BRANCH
+        def self.git_shallow_clone(url, branch)
+            if git_url_isValid?(url)
+                `git clone --depth 1 --branch #{branch} #{url}`
+            else 
+                raise CarbidsetupError, 'Invalid git repo url'
+            end
+        end
+
+        def self.remove_git
+            `rm -rf *.git`
+        end 
     end
 end
