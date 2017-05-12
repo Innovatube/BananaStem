@@ -37,5 +37,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "highline"
   spec.add_runtime_dependency "nokogiri"
   spec.add_runtime_dependency "xcodeproj"
+  spec.add_runtime_dependency "colored2"
 
 end
