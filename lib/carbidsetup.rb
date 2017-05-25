@@ -1,5 +1,4 @@
 require "carbidsetup/version"
-require 'highline'
 require 'pathname'
 require 'find'
 
@@ -33,7 +32,7 @@ module Carbidsetup
         UserInterface.notice "Install missing brew package swagger-codegen-moya"
         `brew install https://raw.githubusercontent.com/dangthaison91/swagger-codegen-moya/swift3_moya/swagger-codegen-moya.rb`
       end
-    end 
+    end
     
     def swagger
       unless File.exist? '*.yaml'
@@ -64,9 +63,11 @@ module Carbidsetup
     
     def download_and_add(main_project, url)
       folder_name = Git.repo_name(url)
+      project_folder = main_project.path.dirname
+      dependency_path = File.join project_folder,BOILERPLATE_MAIN_GROUP, folder_name
       project = main_project[BOILERPLATE_MAIN_GROUP].new_group folder_name
-      Git.download_git_master(url, File.join(main_project.path.dirname,BOILERPLATE_MAIN_GROUP, Git.repo_name(url)))
-      Find.find(File.join(main_project.path.dirname,BOILERPLATE_MAIN_GROUP, folder_name)) do |path|
+      Git.download_git_master(url, dependency_path)
+      Find.find(dependency_path) do |path|
         project.new_file(path) if path =~ /.*\.swift$/
       end
       main_project.save
