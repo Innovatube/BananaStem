@@ -10,17 +10,24 @@ require "carbidsetup/xcodeproj"
 
 module Carbidsetup
   class CarbidsetupError < StandardError; end 
-  class Main < HighLine
+  class Main
     attr_accessor :project_name
-    
+    attr_accessor :options 
     BOILERPLATE_GIT_URL = 'https://github.com/Innovatube/ios-clean-boilerplate.git'
     BOILERPLATE_MAIN_GROUP = 'CleanBoilerplate'
     
-    def run 
-      swagger
-      main_project = download_boilerplate
-      download_and_add main_project, 'https://github.com/SimplicityMobile/Simplicity.git' 
-      UserInterface.prints_warnings
+    def run(options = ARGV)
+      @options = options
+      unless options.nil? 
+        options.each do |option| 
+          download_and_add Xcodeproj::Project.main_project('.'), option if Carbidsetup::Git.git_url_isValid? option 
+        end 
+      else 
+        swagger
+        main_project = download_boilerplate
+        download_and_add main_project, 'https://github.com/doraeminemon/AuthBoilerplateServiceMoya.git' 
+        UserInterface.prints_warnings
+      end 
     end
     
     def brew_package_exist?(name)
