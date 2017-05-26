@@ -63,3 +63,5 @@ fastlane/report.xml
 fastlane/screenshots
 Gemfile.lock
 *.gem
+.yardoc
+doc
