@@ -20,15 +20,24 @@ module Carbidsetup
       @options = options
       unless options.nil? 
         options.each do |option| 
-          download_and_add Xcodeproj::Project.main_project('.'), option if Carbidsetup::Git.git_url_isValid? option 
+          if Carbidsetup::Git.git_url_isValid? option 
+            download_and_add Xcodeproj::Project.main_project('.'), option 
+          else 
+            download_and_add Xcodeproj::Project.main_project('.'), "https://github.com/Innovatube/#{option}.git"
+          end 
         end 
       else 
-        swagger
-        main_project = download_boilerplate
-        download_and_add main_project, 'https://github.com/doraeminemon/AuthBoilerplateServiceMoya.git' 
-        UserInterface.prints_warnings
+        setup_new_project 
       end 
     end
+    
+    def setup_new_project 
+      swagger
+      main_project = download_boilerplate
+      download_and_add main_project, 'https://github.com/doraeminemon/AuthBoilerplateServiceMoya.git' 
+      UserInterface.prints_warnings
+    end 
+    
     
     def brew_package_exist?(name)
       system "brew ls --versions #{name}"
