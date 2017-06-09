@@ -19,7 +19,7 @@ module Carbidsetup
     
     def run(options = ARGV)
       @options = options
-      unless options.nil? 
+      unless options.empty? 
         add_stem stem_from_template options[2] if options.length == 1 && options.first == '-t'
         add_stem options  
       else 
