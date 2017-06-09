@@ -1,6 +1,7 @@
 require "carbidsetup/version"
 require 'pathname'
 require 'find'
+require 'yaml'
 
 require "carbidsetup/git"
 require "carbidsetup/command/facebooksetup"
@@ -19,17 +20,34 @@ module Carbidsetup
     def run(options = ARGV)
       @options = options
       unless options.nil? 
-        options.each do |option| 
-          if Carbidsetup::Git.git_url_isValid? option 
-            download_and_add Xcodeproj::Project.main_project('.'), option 
-          else 
-            download_and_add Xcodeproj::Project.main_project('.'), "https://github.com/Innovatube/#{option}.git"
-          end 
-        end 
+        add_stem stem_from_template options[2] if options.length == 1 && options.first == '-t'
+        add_stem options  
       else 
         setup_new_project 
       end 
     end
+    
+    def stem_from_template(template_file_path)
+      if template_file_path.nil? 
+        unless File.exist? 'stem.yaml'
+          raise CarbidsetupError '-t option is used but stem.yaml not found. Please provide'
+        else
+          template_file_path = Dir.glob('stem.yaml').first   
+        end 
+      end  
+      stem_file = YAML.load File.open template_file_path 
+      
+    end 
+    
+    def add_stem(stems)
+      stems.each do |stem|
+        if Carbidsetup::Git.git_url_isValid? stem 
+          download_and_add Xcodeproj::Project.main_project('.'), stem 
+        else 
+          download_and_add Xcodeproj::Project.main_project('.'), "https://github.com/Innovatube/#{stem}.git"
+        end 
+      end 
+    end 
     
     def setup_new_project 
       swagger
@@ -37,7 +55,6 @@ module Carbidsetup
       download_and_add main_project, 'https://github.com/doraeminemon/AuthBoilerplateServiceMoya.git' 
       UserInterface.prints_warnings
     end 
-    
     
     def brew_package_exist?(name)
       system "brew ls --versions #{name}"
@@ -51,12 +68,12 @@ module Carbidsetup
     end
     
     def swagger
-      unless File.exist? '*.yaml'
-        UserInterface.warn "Swagger file is missing. Please provide."
+      unless File.exist? 'swagger.yaml'
+        UserInterface.warn "Swagger file is missing. Please provide. Make sure your file is named swagger.yaml"
         UserInterface.warn "Won't check nor run swagger-codegen as a result."
         return 
       end 
-      filename = Dir.glob("*.yaml").first 
+      filename = Dir.glob("swagger.yaml").first 
       check_swagger_codegen
       # `swagger-codegen generate -t swagger/moya-template -i #{filename} -l swift3-moya -c ./bin/swagger-config.json -o ./#{project_name}/API`
       `swagger-codegen generate -i #{filename} -l swift3 -o ./#{project_name}/API`
