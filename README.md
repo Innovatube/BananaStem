@@ -1,4 +1,4 @@
-# Carbidsetup
+# BananaStem ( previously Carbidsetup )
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/carbidsetup`. To experiment with that code, run `bin/console` for an interactive prompt.
 
@@ -10,6 +10,7 @@ Welcome to your new gem! In this directory, you'll find the files you need to be
  - `$ gem install *.gem`
 
 ## Installation
+*Not usable yet*
 
 Add this line to your application's Gemfile:
 
@@ -29,6 +30,9 @@ Or install it yourself as:
 
 - `carbidsetup` to install a fresh project 
 - `carbidsetup` followed by either a Github's URL ( end with .git ) or an Innovatube's Github repo name to add a Stem. 
+Example : 
+    `carbidsetup auth-moya-boilerplate`
+This will sync the git repo and then add all the *.swift file into the current project within the folder.
 
 ## Development
 
