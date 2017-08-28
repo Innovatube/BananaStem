@@ -1,6 +1,6 @@
-# BananaStem ( previously Carbidsetup )
+# BananaStem 
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/carbidsetup`. To experiment with that code, run `bin/console` for an interactive prompt.
+Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file . To experiment with that code, run `bin/console` for an interactive prompt.
 
 
 ## Installation in development mode
@@ -13,10 +13,6 @@ Welcome to your new gem! In this directory, you'll find the files you need to be
 *Not usable yet*
 
 Add this line to your application's Gemfile:
-
-```ruby
-gem 'carbidsetup'
-```
 
 And then execute:
 
