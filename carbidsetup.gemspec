@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{ Adding boilerplate file for a carbid project }
   spec.description   = %q{}
-  spec.homepage      = "https://github.com/innovatube/ios-clean-boilerplate"
+  spec.homepage      = ""
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

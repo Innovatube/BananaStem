@@ -14,7 +14,7 @@ module Carbidsetup
   class Main
     attr_accessor :project_name
     attr_accessor :options 
-    BOILERPLATE_GIT_URL = 'https://github.com/Innovatube/ios-clean-boilerplate.git'
+    BOILERPLATE_GIT_URL = ''
     BOILERPLATE_MAIN_GROUP = 'CleanBoilerplate'
     
     def run(options = ARGV)

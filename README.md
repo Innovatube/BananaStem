@@ -26,13 +26,6 @@ Or install it yourself as:
 
     $ gem install carbidsetup
 
-## Usage
-
-- `carbidsetup` to install a fresh project 
-- `carbidsetup` followed by either a Github's URL ( end with .git ) or an Innovatube's Github repo name to add a Stem. 
-Example : 
-    `carbidsetup auth-moya-boilerplate`
-This will sync the git repo and then add all the *.swift file into the current project within the folder.
 
 ## Development
 
